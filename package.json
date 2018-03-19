@@ -1,5 +1,5 @@
 {
-  "name": "nut",
+  "name": "@feiyuerenhai/nut",
   "version": "1.0.0",
   "description": "NUT - the small but tough IDE for front-end developing",
   "main": "src/index.js",
