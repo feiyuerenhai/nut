@@ -1,0 +1,24 @@
+body .nut-err{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: black;
+  z-index: 9999999999999;
+  font-family: monospace;
+}
+
+body .nut-err .nut-err-title{
+  margin-top: 160px;
+  color: #bd0711;
+  font-size: 100px;
+  text-align: center;
+}
+
+body .nut-err .nut-err-content{
+  margin-top: 20px;
+  color: #C7C7C7;
+  font-size: 14px;
+  text-align: center;
+}
