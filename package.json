@@ -7,8 +7,10 @@
   "author": "tony.yht",
   "license": "MIT",
   "dependencies": {
+    "array-unique": "^0.3.2",
     "babel-code-frame": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.1",
     "babel-plugin-transform-async-generator-functions": "^6.24.1",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-class-constructor-call": "^6.24.1",
@@ -31,6 +33,7 @@
     "babel-plugin-transform-es2015-object-super": "^6.24.1",
     "babel-plugin-transform-es2015-parameters": "^6.24.1",
     "babel-plugin-transform-es2015-shorthand-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-spread": "^6.22.0",
     "babel-plugin-transform-es2015-sticky-regex": "^6.24.1",
     "babel-plugin-transform-es2015-template-literals": "^6.22.0",
     "babel-plugin-transform-es2015-typeof-symbol": "^6.23.0",
@@ -43,6 +46,7 @@
     "babel-plugin-transform-function-bind": "^6.22.0",
     "babel-plugin-transform-inline-environment-variables": "^0.2.0",
     "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-proto-to-assign": "^6.26.0",
     "babel-plugin-transform-react-display-name": "^6.25.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
@@ -63,25 +67,18 @@
     "eslint": "^4.15.0",
     "event-stream": "^3.3.4",
     "fast-deep-equal": "^1.0.0",
-    "js-beautify": "^1.7.5",
     "md5": "^2.2.1",
     "mkdirp": "^0.5.1",
     "node-sass": "^4.7.2",
     "ora": "^2.0.0",
     "postcss": "^6.0.16",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
     "resolve": "^1.5.0",
     "uglify-js": "^3.2.2",
     "uniq": "^1.0.1",
     "worker-farm": "^1.5.2",
     "wrap-ansi": "^3.0.1"
   },
-  "devDependencies": {
-    "babel-plugin-syntax-jsx": "^6.18.0",
-    "babel-plugin-transform-es2015-spread": "^6.22.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-  },
+  "devDependencies": {},
   "bin": {
     "nut": "bin/cli.js"
   }
