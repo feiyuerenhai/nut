@@ -32,5 +32,8 @@ module.exports = {
 	StampedMap,
 	relative: (filepath)=>{
 		return path.relative(process.cwd(), filepath);
+	},
+	countLines: s => {
+		return s.split(/\r\n|\r|\n/).length;
 	}
 };

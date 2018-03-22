@@ -4,12 +4,13 @@ const path = require('path');
 
 const Terminal = require('./terminal');
 
-const {relative, readFile, writeFile, resolveLocal} = require('../util');
+const {relative, readFile, writeFile, resolveLocal, countLines} = require('../util');
 
 const Engine = require('./engine');
 
 const JSPackager = require('../packagers/JSPackager');
 const CSSPackager = require('../packagers/CSSPackager');
+const SMPackager = require('../packagers/SMPackager');
 
 const distDir = path.resolve('./dist/bundle');
 
@@ -59,10 +60,24 @@ const build = async (entry, changedFilePath) => {
 
 	unWatchList.forEach(Terminal.remove);
 
-	const umdModuleLoader = await readFile( resolveLocal(__dirname, './almond.js') );
+	const umdModuleLoader = await readFile( resolveLocal(__dirname, '../builtins/loader.js') );
+	const polyfill = await readFile( resolveLocal(__dirname, '../builtins/polyfill.js') );
+	
+	const prelude = umdModuleLoader + '\n' + polyfill;
+
+	let postlude = '\nrequire("' + relative(entry) + '");';
 
 	try{
-		const js = await JSPackager(queue, umdModuleLoader, '\n\nrequire("' + relative(entry) + '");');
+		const sm = SMPackager(countLines(prelude) - 1, queue);
+		await writeFile(distDir + '.js.map', sm);
+		postlude += '\n//# sourceMappingURL=./bundle.js.map';
+	}catch(e){
+		Terminal.fail((e.formatted || e.message)+'\n').stop();
+		return await buildErr(distDir);
+	}
+
+	try{
+		const js = await JSPackager(queue, prelude, postlude);
 		await writeFile(distDir + '.js', js);
 	}catch(e){
 		Terminal.fail((e.formatted || e.message)+'\n').stop();

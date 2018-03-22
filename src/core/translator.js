@@ -1,16 +1,6 @@
 const babel = require('babel-core');
 const babel_env = require("babel-preset-env");
 
-const ASTtoEs5 = ast => {
-	let module = babel.transformFromAst(ast, '', {
-		"presets": [babel_env],
-		"plugins": [
-			require("babel-plugin-transform-es2015-modules-commonjs")
-		],
-	});
-	return module.code;
-};
-
 // babel-plugin-transform-async-generator-functions
 // babel-plugin-transform-async-to-generator
 // babel-plugin-transform-es2015-arrow-functions
@@ -35,10 +25,12 @@ const ASTtoEs5 = ast => {
 // babel-plugin-transform-react-jsx-source
 // babel-plugin-transform-regenerator
 
-const Es7toEs5 = code => {
-	let module = babel.transform(code, {
-		"presets": [babel_env],
-		"plugins": [
+const Es7toEs5 = (code, moduleFile) => {
+	return babel.transform(code, {
+		sourceFileName: moduleFile,
+		sourceMaps: true,
+		presets: [babel_env],
+		plugins: [
 			require("babel-plugin-transform-decorators-legacy").default,
 			require("babel-plugin-transform-decorators"),
 			require("babel-plugin-transform-class-properties"),
@@ -60,8 +52,18 @@ const Es7toEs5 = code => {
 			require("babel-plugin-transform-react-display-name"),
 			require("babel-plugin-transform-strict-mode"),
 		]
-	});
-	return module.code;
+	})
+};
+
+const ASTtoEs5 = (ast, moduleFile) => {
+	return babel.transformFromAst(ast, '', {
+		sourceFileName: moduleFile,
+		sourceMaps: true,
+		presets: [babel_env],
+		plugins: [
+			require("babel-plugin-transform-es2015-modules-commonjs")
+		],
+	})
 };
 
 module.exports = {ASTtoEs5, Es7toEs5};

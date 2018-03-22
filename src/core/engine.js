@@ -86,7 +86,7 @@ self.on('output', tasks => {
 	self.emit('check');
 });
 
-self.on('check', ()=>{
+self.on('check', () => {
 	if(equal(inputList, outputList)){
 		dependings = unique(dependings).reverse();
 		const queue = dependings.map(filepath => {
@@ -96,7 +96,7 @@ self.on('check', ()=>{
 	};
 });
 
-self.on('change', async (filepath)=>{
+self.on('change', async filepath => {
 	try{
 		const sourceCode = await readFile(filepath);
 		const stamp = md5(sourceCode);

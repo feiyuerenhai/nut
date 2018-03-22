@@ -16,11 +16,6 @@ const makeDefine = function(id, code){
 	return 'define('+(id && ('"'+id+'", '))+'function(require, exports, module) {\n' + (code || '') + '\n})';
 }
 
-// 是否为发行版
-const maybeProduction = p => {
-	return path.basename(p).toLowerCase().indexOf('min.') !== -1;
-}
-
 // 根据名称和路径生成一个模块
 module.exports = (moduleFilePath, callback) => {
 	try{
@@ -32,13 +27,17 @@ module.exports = (moduleFilePath, callback) => {
 			};
 			// 文件类型
 			const type = path.extname(moduleFilePath).split('.')[1];
+			// 文件名
+			const fname = path.basename(moduleFilePath).toLowerCase();
 			// 相对路径
 			const rpath = relative(moduleFilePath);
 			// 基础信息
 			let module = {
 				name: rpath,
-				maybeThirdParty: rpath.indexOf( NODE_DIR ) == 0,
+				rpath: rpath,
 				filepath: moduleFilePath,
+				maybeThirdParty: rpath.indexOf( NODE_DIR ) == 0 ,
+				maybeProduction: fname.indexOf('min.') !== -1 || fname.indexOf('production.') !== -1 ,
 				type: type,
 				md5: md5(raw),
 				raw: raw,
@@ -56,10 +55,12 @@ module.exports = (moduleFilePath, callback) => {
 					};
 				}
 
-				// 尝试将所有非第三库的es6+代码转换为es5
+				// 先尝试将所有非第三库的es6+代码转换为es5
 				if(!module.maybeThirdParty){
 					try{
-						module.es5code = translator.Es7toEs5(raw);
+						const translated = translator.Es7toEs5(raw, rpath);
+						module.es5code = translated.code;
+						module.sourceMap = translated.map;
 					}catch(e){
 						error = e;
 						return callback(error, null);
@@ -69,8 +70,8 @@ module.exports = (moduleFilePath, callback) => {
 					module.es5code = raw;
 				}
 
-				// 为三方库且为发行版时不解析ast
-				if(module.maybeThirdParty && maybeProduction(module.filepath)){
+				if(module.maybeThirdParty && module.maybeProduction){
+					// 为三方库且为发行版时不解析ast直接跳过
 					module.generated = makeDefine(module.name, '');
 				}else{
 					// 解析代码生成静态语法树ast，访问ast得到依赖
@@ -99,14 +100,13 @@ module.exports = (moduleFilePath, callback) => {
 						module.dependings.push(moduleIdFilePath);
 					};
 					// 生成代码
-					let code;
 					try{
-						code = translator.ASTtoEs5(ast);
+						const translated = translator.ASTtoEs5(ast, rpath);
+						module.generated = makeDefine(module.name, translated.code);
 					}catch(e){
 						error = e;
 						return callback(error, null);
 					};
-					module.generated = makeDefine(module.name, code);
 					ast = null;
 				}
 			}else if( /^css$|^scss$|^less$/.test(type) ){
