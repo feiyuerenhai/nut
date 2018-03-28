@@ -7,7 +7,7 @@ module.exports = async (queue, pre = '', post = '') => {
 	const facs = JSQueue.map(module => {
 		return module.generated
 	});
-	let code = pre + ';' + facs.join(';\n') + ';' + post;
+	let code = pre + '\n' + facs.join(';\n') + ';' + post;
 	code = await envify(code);
 	// code = minifyjs(code);
 	return code;

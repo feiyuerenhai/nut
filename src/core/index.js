@@ -4,7 +4,7 @@ const path = require('path');
 
 const Terminal = require('./terminal');
 
-const {relative, readFile, writeFile, resolveLocal, countLines} = require('../util');
+const {relative, readFile, writeFile, resolveLocal, nlines} = require('../util');
 
 const Engine = require('./engine');
 
@@ -68,7 +68,7 @@ const build = async (entry, changedFilePath) => {
 	let postlude = '\nrequire("' + relative(entry) + '");';
 
 	try{
-		const sm = SMPackager(countLines(prelude) - 1, queue);
+		const sm = SMPackager( queue, nlines(prelude), 'build.js');
 		await writeFile(distDir + '.js.map', sm);
 		postlude += '\n//# sourceMappingURL=./bundle.js.map';
 	}catch(e){

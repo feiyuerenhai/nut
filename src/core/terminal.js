@@ -23,7 +23,7 @@ module.exports.start = text => {
 };
 
 // 任务中
-module.exports.processing = (text) => {
+module.exports.processing = text => {
 	text = lining(text);
 	spinner.text = chalk.yellow(text);
 	return module.exports;
@@ -48,7 +48,7 @@ module.exports.stop = text => {
 };
 
 // 模块解析
-module.exports.parse = (text) => {
+module.exports.parse = text => {
 	nextLine('>', text, 'green');
 	return module.exports;
 };
@@ -60,7 +60,7 @@ module.exports.change = text => {
 };
 
 // 模块移除
-module.exports.remove = (text)=>{
+module.exports.remove = text => {
 	nextLine('-', text, 'red');
 	return module.exports;
 };

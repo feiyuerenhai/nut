@@ -30,10 +30,10 @@ module.exports = {
 	},
 	resolveLocal,
 	StampedMap,
-	relative: (filepath)=>{
+	relative: filepath => {
 		return path.relative(process.cwd(), filepath);
 	},
-	countLines: s => {
+	nlines: s => {
 		return s.split(/\r\n|\r|\n/).length;
 	}
 };

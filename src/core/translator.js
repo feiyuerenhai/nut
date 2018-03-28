@@ -27,8 +27,9 @@ const babel_env = require("babel-preset-env");
 
 const Es7toEs5 = (code, moduleFile) => {
 	return babel.transform(code, {
-		sourceFileName: moduleFile,
 		sourceMaps: true,
+		sourceMapTarget: moduleFile,
+		sourceFileName: moduleFile,
 		presets: [babel_env],
 		plugins: [
 			require("babel-plugin-transform-decorators-legacy").default,
@@ -55,10 +56,12 @@ const Es7toEs5 = (code, moduleFile) => {
 	})
 };
 
-const ASTtoEs5 = (ast, moduleFile) => {
+const ASTtoEs5 = (ast, moduleFile, inputSourceMap) => {
 	return babel.transformFromAst(ast, '', {
-		sourceFileName: moduleFile,
 		sourceMaps: true,
+		sourceMapTarget: moduleFile,
+		inputSourceMap: inputSourceMap,
+		sourceFileName: moduleFile,
 		presets: [babel_env],
 		plugins: [
 			require("babel-plugin-transform-es2015-modules-commonjs")

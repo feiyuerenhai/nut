@@ -101,8 +101,14 @@ module.exports = (moduleFilePath, callback) => {
 					};
 					// 生成代码
 					try{
-						const translated = translator.ASTtoEs5(ast, rpath);
+						const translated = translator.ASTtoEs5(ast, rpath, module.sourceMap);
+						module.es5code = translated.code;
 						module.generated = makeDefine(module.name, translated.code);
+						if(!module.maybeThirdParty){
+							module.sourceMap = translated.map;
+						}else{
+							module.sourceMap = null;
+						}
 					}catch(e){
 						error = e;
 						return callback(error, null);
