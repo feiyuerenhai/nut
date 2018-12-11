@@ -11,12 +11,12 @@
 
 - real-time building with smartly designed cache mechanism.
 
-- light weight sourcemap support.
+- light-weighted sourcemap.
 
 ## Getting Started tutorial elaborated with demo project
 
 * `npm install @feiyuerenhai/nut -g`npm install **nut** globally.
-* `git clone git@github.com:feiyuerenhai/nut-demo.git` git clone the demo project to your file system.
-* `nut watch nut-demo/src/index.jsx`nut watch the entry file.
-* enjoy great time of developing.​
+* `git clone git@github.com:feiyuerenhai/nut-demo.git` git clone the demo project to your disk.
+* `nut watch nut-demo/src/index.jsx`nut watch ${the_entry_file}.
+* enjoy relaxing time of front-end developing.
 
