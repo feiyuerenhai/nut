@@ -13,10 +13,13 @@
 
 - light-weighted sourcemap.
 
-## Getting Started tutorial elaborated with demo project
+## Getting started tutorial elaborated with demo project
+
+![](https://i.imgur.com/clBW6MM.jpg)
 
 * `npm install @feiyuerenhai/nut -g`npm install **nut** globally.
 * `git clone git@github.com:feiyuerenhai/nut-demo.git` git clone the demo project to your disk.
 * `nut watch nut-demo/src/index.jsx`nut watch ${the_entry_file}.
 * enjoy relaxing time of front-end developing.
+* for further details, please [refer to this video](http://v.youku.com/v_show/id_XMzk1OTc1NTQ4MA==.html).
 
