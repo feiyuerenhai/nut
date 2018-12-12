@@ -15,7 +15,7 @@
 
 ## Getting started tutorial elaborated with demo project
 
-![](https://i.imgur.com/clBW6MM.jpg)
+* ![](https://i.imgur.com/clBW6MM.jpg)
 
 * `npm install @feiyuerenhai/nut -g`npm install **nut** globally.
 
