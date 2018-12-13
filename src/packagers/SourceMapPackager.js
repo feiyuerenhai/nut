@@ -1,6 +1,6 @@
 const convert = require('convert-source-map');
 const combine = require('combine-source-map');
-const {nlines} = require('../util');
+const { nlines } = require('../util');
 
 const createCombiner = startAt => {
 	let sourcemapData = [];
@@ -15,7 +15,7 @@ const createCombiner = startAt => {
 				}, lineCount]);
 				// 追加 offset 并且加上wrapper的define方法所作行数
 				lineCount += offset + 2;
-			}else{
+			} else {
 				// 无sourcemap
 				lineCount += offset;
 			}
@@ -24,7 +24,7 @@ const createCombiner = startAt => {
 			// 输出
 			const sm = combine.create(sourceMapFileName || 'bundle.js');
 			for (const [map, offset] of sourcemapData) {
-				sm.addFile(map, { line: offset});
+				sm.addFile(map, { line: offset });
 			}
 			return convert.fromBase64(sm.base64()).toJSON();
 		},
@@ -33,10 +33,10 @@ const createCombiner = startAt => {
 
 module.exports = (queue, startAt, sourceMapFileName) => {
 	const combiner = createCombiner(startAt);
-	queue.forEach( module => {
-		if(module.sourceMap){
+	queue.forEach(module => {
+		if (module.sourceMap) {
 			combiner.add(nlines(module.es5code), module.sourceMap, module.filepath);
-		}else{
+		} else {
 			combiner.add(nlines(module.generated));
 		}
 	});

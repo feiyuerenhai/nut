@@ -10,7 +10,7 @@ const Engine = require('./engine');
 
 const JSPackager = require('../packagers/JSPackager');
 const CSSPackager = require('../packagers/CSSPackager');
-const SMPackager = require('../packagers/SMPackager');
+const SourceMapPackager = require('../packagers/SourceMapPackager');
 
 const distDir = path.resolve('./dist/bundle');
 
@@ -68,7 +68,7 @@ const build = async (entry, changedFilePath) => {
 	let postlude = '\nrequire("' + relative(entry) + '");';
 
 	try{
-		const sm = SMPackager( queue, nlines(prelude), 'build.js');
+		const sm = SourceMapPackager( queue, nlines(prelude), 'build.js');
 		await writeFile(distDir + '.js.map', sm);
 		postlude += '\n//# sourceMappingURL=./bundle.js.map';
 	}catch(e){
